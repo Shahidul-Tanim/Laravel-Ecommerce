@@ -49,10 +49,12 @@
                                 
                                 @foreach ( $categories as $category)
                                  
-                                    
+                                @if ($findCategory->category_id != $category->id)
+                                   
                                 <option {{ $findCategory->category_id == $category->id ? 'selected' : '' }} value="{{ $category->id }}"> {{ $category->category }} </option>
                                 
-
+                                @endif    
+                                
                                 @endforeach
 
                             </select>

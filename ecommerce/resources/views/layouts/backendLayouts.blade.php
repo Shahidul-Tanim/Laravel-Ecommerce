@@ -196,7 +196,7 @@
                     <div class="profile-info">
                       <div class="info">
                         <div class="image">
-                          <img src="{{asset('backend/assets/images/profile/profile-image.png')}}" alt="" />
+                          <img src="{{asset('backend/assets/images/profile/pp.jpg')}}" alt="" />
                         </div>
                         <div>
                           <h6 class="fw-500">{{ auth()->user()->name }}</h6>
@@ -209,7 +209,7 @@
                     <li>
                       <div class="author-info flex items-center !p-1">
                         <div class="image">
-                          <img src="{{asset('backend/assets/images/profile/profile-image.png')}}" alt="image">
+                          <img src="{{asset('backend/assets/images/profile/profile-pic.JPG')}}" alt="image">
                         </div>
                         <div class="content">
                           <h4 class="text-sm">{{ auth()->user()->name }}</h4>
