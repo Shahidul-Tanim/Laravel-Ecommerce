@@ -18,8 +18,7 @@ class ProductController extends Controller
             'title' => 'required|min:15',
             'price' => 'required',
             'brand' => 'required',
-            
         ]);
-
+        return back();
     }
 }
