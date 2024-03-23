@@ -78,6 +78,6 @@ class CategoryController extends Controller
 
     function categoryDelete($id){
         Category::find($id)->delete();
-        return back();
+        return redirect()->route('category');
     }
 }

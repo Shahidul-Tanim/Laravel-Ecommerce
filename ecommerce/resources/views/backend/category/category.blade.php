@@ -9,7 +9,7 @@
                 <div class="card">
                     <div class="card-header bg-info">Add Category</div>
                     <div class="card-body">
-                        <form action="{{ route('categoryInsert') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('category.insert') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <label for="category">category</label>
                             <input type="text" name="category" id="category" placeholder="Add Category" class="form-control mt-2">
@@ -39,19 +39,20 @@
                 <div class="card">
                     <div class="card-header bg-info">Edit Category</div>
                     <div class="card-body">
-                        <form action="{{ route('categoryUpdate', $findCategory->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('category.update', $findCategory->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <label for="category">category</label>
                             <input value="{{$findCategory->category}}" type="text" name="category" id="category" placeholder="Add Category" class="form-control mt-2">
 
                             <select name="category_id" class="form-control my-2" id="category_id">
-                                
+                                <option disabled selected >Select and Parent Category</option>
                                 @foreach ( $categories as $category)
                                  
-                                @if ($findCategory->category_id != $category->id)
+                                @if ($findCategory->id != $category->id)
+                                <option {{ $findCategory->category_id == $category->id ? 'selected' : '' }} value="{{ $category->id }}">
+                                     {{ $category->category }} </option>
                                    
-                                <option {{ $findCategory->category_id == $category->id ? 'selected' : '' }} value="{{ $category->id }}"> {{ $category->category }} </option>
                                 
                                 @endif    
                                 
@@ -87,8 +88,8 @@
                            <td><b>{{ $category->category_slug}}</b></td>
                            <td>
                             <div class="btn-group">
-                                <a href="{{ route('categoryEdit', $category->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="{{ route('categoryDelete', $category->id) }}" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{{ route('category.edit', $category->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('category.delete', $category->id) }}" class="btn btn-danger btn-sm">Delete</a>
                             </div>
                            </td>
                        </tr>
@@ -120,11 +121,13 @@
                        @endif
 
                     @empty
-                        <table>
+                        {{-- <table> --}}
                             <tr>
-                                <td>NO DATA FOUND!☹</td>
+                                <td  colspan="4" style="text-align: center" class="bg-secondary">
+                                    <h4 class="text-white">NO DATA FOUND🚫</h4>
+                                </td>
                             </tr>
-                        </table>
+                        {{-- </table> --}}
                     @endforelse
 
                 </table>
