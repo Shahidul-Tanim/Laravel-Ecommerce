@@ -4,16 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="{{asset('backend/assets/images/favicon.svg')}}
-')}}
-')}}
-')}}
-')}}
-')}}
-')}}
-')}}
-')}}
-')}}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{asset('backend/assets/images/favicon.svg')}}" type="image/x-icon" />
     <title>Dashboard Page</title>
 
     <!-- ========== All CSS files linkup ========= -->
@@ -21,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/css/lineicons.css') }}" />
     <link rel="stylesheet" href="{{ asset('backend/assets/css/materialdesignicons.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('backend/assets/css/fullcalendar.css') }}" />
+    @stack('customCss')
     <link rel="stylesheet" href="{{ asset('backend/assets/css/main.css') }}" />
   </head>
   <body>
@@ -332,6 +324,7 @@
     <script src="{{asset ('backend/assets/js/jvectormap.min.js') }}"></script>
     <script src="{{asset ('backend/assets/js/world-merc.js') }}"></script>
     <script src="{{asset ('backend/assets/js/polyfill.js') }}"></script>
+    @stack('customJs')
     <script src="{{asset ('backend/assets/js/main.js') }}"></script>
   </body>
 </html>

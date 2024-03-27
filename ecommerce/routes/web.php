@@ -38,6 +38,6 @@ Route::put('/admin/update/{id}', [CategoryController::class, 'categoryUpdate'])-
 Route::prefix('/admin/product')->controller(ProductController::class)->name('admin.products.')->middleware('auth')->group(function(){
     
     Route::get('/', 'addProduct')->name('add');
-    Route::post('/store', 'storeProduct')->name('store');
+    Route::post('/store/{id?}','storeProduct')->name('store');
 
 });

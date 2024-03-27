@@ -29,4 +29,12 @@ class Product extends Model
     //     'id', 
     //     'otp'
     // ];
+
+    function galleries(){
+        $this->hasMany(Gallery::class);
+    }
+
+    function categories(){
+        return  $this->belongsToMany(Category::class);
+    }
 }
