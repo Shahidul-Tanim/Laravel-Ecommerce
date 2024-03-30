@@ -20,11 +20,12 @@ class ProductController extends Controller
 
     
     function storeProduct(Request $request, $id = null){
+         //* VALIDATION
         $request->validate([
-            // 'title' => 'required|min:15',
-            // 'price' => 'required_with:sell_price|numeric',
-            // 'brand' => 'required',
-            'galleries.*' => 'mimes:png,jpg',
+            'title' => 'required',
+            'price' => 'required_with:sell_price|numeric',
+            'brand' => 'required',
+            'galleries.*' => 'mimes:png,jpg,jpeg',
         ]);
        
         // *STORE OR UPDATE NEW PRODUCT
@@ -65,8 +66,6 @@ class ProductController extends Controller
               }
             }
         
-
-        // dd($this->uploadMultipleMedia($request->galleries, 'gallery'));
-        // return back();
+        return back();
     }
 }

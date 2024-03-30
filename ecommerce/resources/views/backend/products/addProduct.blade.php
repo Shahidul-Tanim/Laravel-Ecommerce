@@ -106,7 +106,7 @@
 
                     <div class="clo-lg-12">
                         <div class="input-style-2">
-                            <textarea name="long_detail" placeholder="Long Detail"></textarea>
+                            <textarea name="long_detail" id="longDetail" placeholder="Long Detail"></textarea>
                             @error('long_detail')
                             <sapn class="text-danger">{{ $message }}</sapn>
                             @enderror
@@ -181,7 +181,18 @@
 @endpush
 @push('customJs')
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/classic/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#longDetail' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+
 <script>
     $(document).ready(function() {
     $('.categoryItems').select2();

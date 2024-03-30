@@ -13,8 +13,8 @@
    <td>{{ $subcategory->category_slug}}</td>
    <td>
       <div class="btn-group">
-         <a href="{{ route('categoryEdit', $subcategory->id) }}" class="btn btn-warning btn-sm">Edit</a>
-         <a href="{{ route('categoryDelete', $subcategory->id) }}" class="btn btn-danger btn-sm">Delete</a>
+         <a href="{{ route('category.edit', $subcategory->id) }}" class="btn btn-warning btn-sm">Edit</a>
+         <a href="{{ route('category.delete', $subcategory->id) }}" class="btn btn-danger btn-sm">Delete</a>
      </div>
    </td>
 </tr>
