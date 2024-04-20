@@ -31,7 +31,7 @@ class Product extends Model
     // ];
 
     function galleries(){
-        $this->hasMany(Gallery::class);
+        return $this->hasMany(Gallery::class);
     }
 
     function categories(){
