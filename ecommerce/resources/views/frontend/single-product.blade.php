@@ -233,11 +233,11 @@
                                                                     </a>
                                                                     <div class="position-relative">
                                                                         <div span class="commenter-rating ratiing-four-star position-absolute">
+                                                                            @for($i= 0; $i < $review->rating; $i++ )
                                                                             <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                            {{-- <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                            <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                            <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                            <a href="single-product-3.html#"><i class="fas fa-star empty-rating"></i></a> --}}
+                                                                            @endfor
+
+                                                                            
                                                                         </div span>
                                                                       
                                                                         <div span class="commenter-rating ratiing-four-star">
