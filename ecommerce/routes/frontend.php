@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Frontend\Auth\LoginController;
-use App\Http\Controllers\Frontend\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\HomepageController;
+use App\Http\Controllers\Frontend\Auth\LoginController;
+use App\Http\Controllers\Frontend\Auth\SocialController;
+use App\Http\Controllers\Frontend\Auth\RegisterController;
 
 Route::get('/', [HomepageController::class, 'homepage'])->name('homepage');
 Route::get('/category/{slug}', [ProductController::class, 'showCategoryProduct'])->name('product.category');
@@ -19,3 +20,12 @@ Route::post('/sign-in',[LoginController::class, 'login'])->name('signin.verify')
 // *Sign-up
 Route::get('/sign-up',[RegisterController::class, 'showRegistrationForm'])->name('signup');
 Route::post('/signup-store',[RegisterController::class, 'register'])->name('signup.store');
+// *Sign-out
+Route::get('/sign-out',[LoginController::class, 'logout'])->name('signout');
+// *Google
+Route::get('/google/login',[SocialController::class, 'googleLogin'])->name('google.login');
+Route::get('/google/redirect',[SocialController::class, 'googleVerify'])->name('google.verify');
+// *Profilre
+Route::get('/my-profile', function(){
+    return view('frontend.MyAccount');
+});
