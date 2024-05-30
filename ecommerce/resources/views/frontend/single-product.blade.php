@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
                                     <ul class="product-meta">
-                                        <li class="{{ $product->stock ? "" : "text-danger" }}"><i class="fal fa-check"></i>{{ $product->stock ? "in stock" : "out of stock" }}</li>
+                                        <li class="{{ $product->stock ? 'text-primary' : ' text-danger' }}">{!! $product->stock ? '<i class="fal fa-check"></i>' : '❌' !!}{{ $product->stock ? "In Stock" : "Out of Stock" }}</li>
                                         <li><i class="fal fa-check"></i>Free delivery available</li>
                                         <li><i class="fal fa-check"></i>Sales 30% Off Use Code: MOTIVE30</li>
                                     </ul>
@@ -112,19 +112,27 @@
 
 
                                     <!-- Start Product Action Wrapper  -->
-                                    <div class="product-action-wrapper d-flex-center">
-                                        <!-- Start Quentity Action  -->
-                                        <div class="pro-qty"><input type="text" value="1"></div>
-                                        <!-- End Quentity Action  -->
+                                    @if ($product->stock)
+                    
+                                    <form action="{{ route('cart.store') }}" method="POST">
+                                        @csrf
+                                        <div class="product-action-wrapper d-flex-center">
+                                            <!-- Start Quentity Action  -->
+                                            <div class="pro-qty"><input type="text" value="1" min="1" name="qty"></div>
+                                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                            <!-- End Quentity Action  -->
+                                            <!-- Start Product Action  -->
+                                            <ul class="product-action d-flex-center mb--0">
+                                                <li class="add-to-cart">
+                                                    <button style="width: fit-containt;disply: inline-block " class="axil-btn btn-bg-primary">Add to Cart</button>
+                                                </li>
+                                                <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
+                                            </ul>
+                                            <!-- End Product Action  -->
+                                        </div>
+                                    </form>
 
-                                        <!-- Start Product Action  -->
-                                        <ul class="product-action d-flex-center mb--0">
-                                            <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Add to Cart</a></li>
-                                            <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <!-- End Product Action  -->
-
-                                    </div>
+                                    @endif
                                     <!-- End Product Action Wrapper  -->
                                 </div>
                             </div>

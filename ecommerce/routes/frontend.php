@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Frontend\Auth\LoginController;
@@ -28,4 +30,17 @@ Route::get('/google/redirect',[SocialController::class, 'googleVerify'])->name('
 // *Profilre
 Route::get('/my-profile', function(){
     return view('frontend.MyAccount');
+})->middleware('customer');
+
+// *Cart Update
+Route::middleware('customer')->name('cart.')->prefix('/cart/')->controller(CartController::class)->group(function(){
+    Route::post('/cart-store', 'storeCart')->name('store');
+    Route::put('/cart-update', 'updateCart')->name('update');
+    Route::get('/view-cart', 'viewCart')->name('view');
+    Route::get('/cart-delete/{id}', 'deleteCart')->name('delete');
+});
+
+// *Cart Checkout
+Route::middleware('customer')->name('order.')->prefix('/order/')->controller(OrderController::class)->group(function(){
+    Route::get('/checkout', 'checkout')->name('checkout');
 });
