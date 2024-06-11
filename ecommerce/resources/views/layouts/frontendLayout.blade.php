@@ -739,6 +739,7 @@
     <script src="{{asset ('frontend/assets/js/vendor/counterup.js') }}"></script>
     <script src="{{asset ('frontend/assets/js/vendor/waypoints.min.js') }}"></script>
     <script src="{{asset ('frontend/assets/js/main.js') }}"></script>
+
     <script>
         
         $('#productSearch').keyup(function(){
@@ -797,6 +798,8 @@
         })
 
     </script>
+
+    @stack('customJs')
 </body>
 
 </html>

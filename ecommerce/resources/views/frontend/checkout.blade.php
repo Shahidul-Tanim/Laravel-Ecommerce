@@ -107,41 +107,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $total = 0;
+                                            @endphp
+                                            @foreach ($carts as $cart)
+                                                
                                             <tr class="order-product">
-                                                <td>Commodo Blown Lamp <span class="quantity">x1</span></td>
-                                                <td>$117.00</td>
+                                                <td>{{ $cart->product->title }} <span class="quantity">x{{ $cart->qty }}</span></td>
+                                                <td>{{ $cart->qty * ($cart->product->selling_price ?? $cart->product->price) }} tk</td>
                                             </tr>
-                                            <tr class="order-product">
-                                                <td>Commodo Blown Lamp <span class="quantity">x1</span></td>
-                                                <td>$198.00</td>
-                                            </tr>
-                                            <tr class="order-subtotal">
-                                                <td>Subtotal</td>
-                                                <td>$117.00</td>
-                                            </tr>
-                                            <tr class="order-shipping">
-                                                <td colspan="2">
-                                                    <div class="shipping-amount">
-                                                        <span class="title">Shipping Method</span>
-                                                        <span class="amount">$35.00</span>
-                                                    </div>
-                                                    <div class="input-group">
-                                                        <input type="radio" id="radio1" name="shipping" checked>
-                                                        <label for="radio1">Free Shippping</label>
-                                                    </div>
-                                                    <div class="input-group">
-                                                        <input type="radio" id="radio2" name="shipping">
-                                                        <label for="radio2">Local</label>
-                                                    </div>
-                                                    <div class="input-group">
-                                                        <input type="radio" id="radio3" name="shipping">
-                                                        <label for="radio3">Flat rate</label>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            @php
+                                                $total +=$cart->qty * ($cart->product->selling_price ?? $cart->product->price)
+                                            @endphp
+                                            @endforeach
+    
+                                           
                                             <tr class="order-total">
                                                 <td>Total</td>
-                                                <td class="order-total-amount">$323.00</td>
+                                                <td class="order-total-amount">{{ $total }} tk <input type="hidden" name="amount" id="totalAmount" value="{{ $total }}"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -149,28 +132,29 @@
                                 <div class="order-payment-method">
                                     <div class="single-payment">
                                         <div class="input-group">
-                                            <input type="radio" id="radio4" name="payment">
+                                            <input type="radio" id="radio4" name="payment" value="bank">
                                             <label for="radio4">Direct bank transfer</label>
                                         </div>
                                         <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
                                     </div>
                                     <div class="single-payment">
                                         <div class="input-group">
-                                            <input type="radio" id="radio5" name="payment">
+                                            <input type="radio" id="radio5" name="payment" value="cash">
                                             <label for="radio5">Cash on delivery</label>
                                         </div>
                                         <p>Pay with cash upon delivery.</p>
                                     </div>
                                     <div class="single-payment">
                                         <div class="input-group justify-content-between align-items-center">
-                                            <input type="radio" id="radio6" name="payment" checked>
-                                            <label for="radio6">Paypal</label>
+                                            <input type="radio" id="radio6" name="payment" value="ssl">
+                                            <label for="radio6">Ssl Commerz</label>
                                             <img src="assets/images/others/payment.png" alt="Paypal payment">
                                         </div>
-                                        <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                                        
                                     </div>
                                 </div>
                                 <button type="submit" class="axil-btn btn-bg-primary checkout-btn">Process to Checkout</button>
+                                <button style="display: none" id="sslczPayBtn"token="if you have any token validation"postdata=""order="If you already have the transaction generated for current order"endpoint="/pay-via-ajax"> Pay Now</button>
                             </div>
                         </div>
                     </div>
@@ -180,6 +164,63 @@
         <!-- End Checkout Area  -->
 
     </main>
+
+    @push('customJs')
+    <script>
+
+        $('input[name="payment"]').change(function(){
+            if ($(this).val()  == 'ssl') {
+                $('.checkout-btn').hide()
+                $('#sslczPayBtn').show()
+            }else{
+                $('.checkout-btn').show()
+                $('#sslczPayBtn').hide()
+            }
+        })
+
+        $('#sslczPayBtn').click(function(){
+
+            var obj = {};
+            obj.fname = $('#first-name').val();
+            obj.lname = $('#last-name').val();
+            obj.company = $('#company-name').val();
+            obj.address = $('#address1').val();
+            obj.address2 = $('#address2').val();
+            obj.town = $('#town').val();
+            obj.phone = $('#phone').val();
+            obj.email = $('#email').val();
+            obj.amount = $('#totalAmount').val();
+            obj.total_qty = {{ $carts->sum('qty') }}
+            
+            $('#sslczPayBtn').prop('postdata', obj);
+        })
+
+            var obj = {};
+            obj.fname = $('#first-name').val();
+            obj.lname = $('#last-name').val();
+            obj.company = $('#company-name').val();
+            obj.address = $('#address1').val();
+            obj.address2 = $('#address2').val();
+            obj.town = $('#town').val();
+            obj.phone = $('#phone').val();
+            obj.email = $('#email').val();
+            obj.amount = $('#totalAmount').val();
+            obj.total_qty = {{ $carts->sum('qty') }}
+            
+            
+            $('#sslczPayBtn').prop('postdata', obj);
+
+        (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);
+            tag.parentNode.insertBefore(script, tag);
+        };
+
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+    })(window, document);
+    </script>
+    @endpush
 
 @endsection
    

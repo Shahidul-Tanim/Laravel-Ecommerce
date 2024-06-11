@@ -41,3 +41,4 @@ Route::prefix('/admin/product')->controller(ProductController::class)->name('adm
     Route::post('/store/{id?}','storeProduct')->name('store');
 
 });
+
