@@ -74,48 +74,35 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Order</th>
-                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Detail</th>
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Total</th>
                                                         <th scope="col">Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+
+                                                    @forelse ($orders as $order)
                                                     <tr>
-                                                        <th scope="row">#6523</th>
-                                                        <td>September 10, 2020</td>
-                                                        <td>Processing</td>
-                                                        <td>$326.63 for 3 items</td>
-                                                        <td><a href="my-account.html#" class="axil-btn view-btn">View</a></td>
+                                                        <th scope="row">#{{ $order->transaction_id }}</th>
+                                                        <td>
+
+                                                            @foreach ($order->orderItems as $item)
+                                                                    <div>
+                                                                        <b>{{ $item->product->title }} <sub>({{ $item->amount / $item->qty }} * {{ $item->qty }} )</sub></b><br>                            
+                                                                    </div>
+                                                            @endforeach
+                                                            {{ $order->created_at->format('d M, Y') }}
+
+                                                        </td>
+                                                        <td>{{ $order->status }}</td>
+                                                        <td>{{ $order->total_amount }}tk for {{ $order->total_qty }} items</td>
+                                                        <td><a href="{{ route('invoice.download', $order->id) }}" class="axil-btn view-btn">Download</a></td>
                                                     </tr>
-                                                    <tr>
-                                                        <th scope="row">#6523</th>
-                                                        <td>September 10, 2020</td>
-                                                        <td>On Hold</td>
-                                                        <td>$326.63 for 3 items</td>
-                                                        <td><a href="my-account.html#" class="axil-btn view-btn">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">#6523</th>
-                                                        <td>September 10, 2020</td>
-                                                        <td>Processing</td>
-                                                        <td>$326.63 for 3 items</td>
-                                                        <td><a href="my-account.html#" class="axil-btn view-btn">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">#6523</th>
-                                                        <td>September 10, 2020</td>
-                                                        <td>Processing</td>
-                                                        <td>$326.63 for 3 items</td>
-                                                        <td><a href="my-account.html#" class="axil-btn view-btn">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">#6523</th>
-                                                        <td>September 10, 2020</td>
-                                                        <td>Processing</td>
-                                                        <td>$326.63 for 3 items</td>
-                                                        <td><a href="my-account.html#" class="axil-btn view-btn">View</a></td>
-                                                    </tr>
+                                                    @empty
+                                                        <h5><b>No Order Found!</b> </h5>
+                                                    @endforelse
+                                                   
                                                 </tbody>
                                             </table>
                                         </div>

@@ -9,8 +9,11 @@ use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\Frontend\Auth\LoginController;
 use App\Http\Controllers\Frontend\Auth\SocialController;
 use App\Http\Controllers\Frontend\Auth\RegisterController;
+use App\Http\Controllers\Frontend\MyAccountController;
 
+// *Frontend
 Route::get('/', [HomepageController::class, 'homepage'])->name('homepage');
+Route::get('/shop', [HomepageController::class, 'shopPage'])->name('shop');
 Route::get('/category/{slug}', [ProductController::class, 'showCategoryProduct'])->name('product.category');
 Route::get('/product/{slug}', [ProductController::class, 'showProduct'])->name('product.show');
 
@@ -29,9 +32,9 @@ Route::get('/sign-out',[LoginController::class, 'logout'])->name('signout');
 Route::get('/google/login',[SocialController::class, 'googleLogin'])->name('google.login');
 Route::get('/google/redirect',[SocialController::class, 'googleVerify'])->name('google.verify');
 // *Profilre
-Route::get('/my-profile', function(){
-    return view('frontend.MyAccount');
-})->middleware('customer');
+Route::get('/my-profile',[MyAccountController::class, 'myAccount'])->middleware('customer');
+// *Invoice
+Route::get('/my-invoice/{id}',[MyAccountController::class, 'downloadInvoice'])->name('invoice.download')->middleware('customer');
 
 // *Cart Update
 Route::middleware('customer')->name('cart.')->prefix('/cart/')->controller(CartController::class)->group(function(){

@@ -274,6 +274,10 @@
                                         <!-- End .axil-commnet-area -->
                                     </div>
                                     <!-- End .col -->
+                                    @auth('customer')                                      
+                                    @if (auth('customer')->user()->hasOrder($product->id))
+                                        
+                                    
                                     <div class="col-lg-6 mb--40">
                                         <!-- Start Comment Respond  -->
                                         <div class="comment-respond pro-des-commend-respond mt--0">
@@ -320,6 +324,9 @@
                                         </div>
                                         <!-- End Comment Respond  -->
                                     </div>
+
+                                    @endif
+                                    @endauth
                                     <!-- End .col -->
                                 </div>
                             </div>
