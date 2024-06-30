@@ -17,7 +17,40 @@ class HomepageController extends Controller
     function shopPage(){
         $products = Product::with(['galleries' => function($query){
             return $query->select('id','product_id','title')->first();
-        }])->where('status', true)->select('id','title','slug','featured_img','price','selling_price','status')->paginate(12);
-        return view('frontend.shopSidebar', compact('products'));
+        }])
+        ->where('status', true)
+        ->select('id','title','slug','featured_img','price','selling_price','status')
+        ->paginate(12);
+
+
+        $categories = Category::get();
+
+        return view('frontend.shopSidebar', compact('products', 'categories'));
+    }
+
+    function filterProducts(Request $request){
+
+        
+        $query = Product::query();
+
+        // *CATEGORIES
+        if($request->categories){
+            $query->whereHas('categories', function($q) use ($request){
+                return $q->whereIn('slug', $request->categories);
+            });
+        }
+
+        // *PRICING
+        if($request->price){
+            $query->whereBetween('price', [$request->price['min'],$request->price['max']]);
+        }
+
+        $products = $query->with('galleries')->orderBy($request->ordering['order'],$request->ordering['sort'])->get();
+        // Product::max();
+
+        return $products;
+        // return $request->ordering;
+
+
     }
 }
